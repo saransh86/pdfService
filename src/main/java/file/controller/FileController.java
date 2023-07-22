@@ -11,10 +11,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -48,7 +45,7 @@ public class FileController {
     }
 
     @GetMapping("/convertFiles")
-    public ResponseEntity<byte[]> convertToPdf(@RequestParam(required = true) String[] requestFiles, String email) throws IOException, DocumentException {
+    public ResponseEntity<byte[]> convertToPdf(@RequestParam(required = true) String[] files, String email) throws IOException, DocumentException {
         try {
             /**
              * Get all files for the username
@@ -58,7 +55,7 @@ public class FileController {
              * Filter the files based on the request
              */
             List<file.model.File> filteredList = allFiles.stream()
-                    .filter(f -> Arrays.asList(requestFiles).contains(f.getName()))
+                    .filter(f -> Arrays.asList(files).contains(f.getName()))
                     .toList();
 
             /**
